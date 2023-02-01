@@ -22,6 +22,7 @@ const Completed = () => {
         await fetch(`http://localhost:8000/api/todos/${id}`, {
             method: 'DELETE',
         });
+        setCompletedTodos(completedTodos.filter((todo) => todo.id !== id));
     }
 
     if (isLoading) return <div className={"flex justify-center text-xl"}>Loading...</div>
@@ -32,7 +33,7 @@ const Completed = () => {
             {/*<h1 className={"text-3xl text-center mb-28"}>Completed</h1>*/}
             <ul className={"text-center flex flex-wrap"}>
                 {completedTodos.map((todo) => (
-                    <li key={todo.id} onClick={() => handleDelete(todo.id)} className={"m-10 text-3xl px-10 font-extralight border border-gray-600 rounded py-1 hover:scale-105 hover:line-through"}>
+                    <li key={todo.id} onClick={() => handleDelete(todo.id)} className={"m-10 text-2xl px-10 font-extralight border border-gray-400 rounded py-1 hover:scale-105 hover:line-through"}>
                         { todo.title }
                     </li>
                 ))}

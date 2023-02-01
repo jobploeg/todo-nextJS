@@ -40,7 +40,8 @@ export default function Home() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({state: 'deleted'})
-        });
+        })
+        setTodos(todos.filter((todo) => todo.id !== id));
     }
 
     const completedTodoHandler = async (id) => {
@@ -50,7 +51,8 @@ export default function Home() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({state: 'completed'})
-        });
+        })
+        setTodos(todos.filter((todo) => todo.id !== id));
     }
 
     // handle input change
@@ -67,14 +69,11 @@ export default function Home() {
             validation_text.innerHTML = '<p style="color: red;"></p>';
             setInput('');
             //execute function addnewtodo .then to update state
-            addNewTodo(input).then(() => {
-
-            })
+            addNewTodo(input)
         }
     }
 
     if (isLoading) return <div className={"flex justify-center text-xl"}>Loading...</div>
-    if (todos.length === 0) return <div className={"flex justify-center text-3xl mt-14"}>No todos</div>
 
 
     return (
@@ -91,19 +90,17 @@ export default function Home() {
                 <button onClick={(event) => handleSubmit(event)} className={"border border-gray-600 hover:bg-gray-300 rounded-r px-5 bg-gray-200"}>Add</button>
             </div>
         </form>
-        <div className={"flex justify-center text-center"}>
-        <ul className={"flex mt-28 flex-wrap w-3/5 gap-10"}>
-            {todos.map((todo) => {
-                return todo.state === 'active' &&
-                    <div className={"flex"}>
-                        <div onClick={() => deleteTodoHandler(todo.id)} key={todo.id} className={"my-1 text-2xl hover:line-through font-light  hover:scale-105 "}>
+        <div className={"flex justify-center"}>
+            <ul className={"flex mt-28 flex-wrap w-2/5 gap-10 justify-center"}>
+                {todos.map((todo) => (
+                    <div className={"flex"} key={todo.id}>
+                        <div onClick={() => deleteTodoHandler(todo.id)} className={"my-1 text-2xl hover:line-through font-light  hover:scale-105 hover:cursor-pointer "}>
                             {todo.title}
                         </div>
-                        <div onClick={() => completedTodoHandler(todo.id)} key={todo.id} className={"font-extralight rounded py-1 text-xl mt-1 px-4 hover:cursor-pointer hover:scale-125"}> &#10003; </div>
+                        <div onClick={() => completedTodoHandler(todo.id)}  className={"font-extralight rounded py-1 text-xl mt-1 px-4 hover:cursor-pointer hover:scale-125"}> &#10003; </div>
                     </div>
-                }
-            )}
-        </ul>
+                ))}
+            </ul>
         </div>
     </>
   )

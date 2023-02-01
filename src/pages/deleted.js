@@ -22,6 +22,7 @@ const Deleted = () => {
         await fetch(`http://localhost:8000/api/todos/${id}`, {
             method: 'DELETE',
         });
+        setDeletedTodos(deletedTodos.filter((todo) => todo.id !== id));
     }
 
 
@@ -34,7 +35,7 @@ const Deleted = () => {
             {/*<h1 className={"text-3xl text-center mb-28"}>Deleted</h1>*/}
             <ul className={"text-center flex flex-wrap"}>
                 {deletedTodos.map((todo) => (
-                    <li onClick={() => handleDelete(todo.id)} key={todo.id} className={"m-10 text-3xl px-10 font-extralight border border-gray-600 rounded py-1 hover:scale-105 hover:line-through"}>
+                    <li onClick={() => handleDelete(todo.id)} key={todo.id} className={"m-10 text-2xl px-10 font-extralight border border-gray-400 rounded py-1 hover:scale-105 hover:line-through"}>
                         { todo.title }
                     </li>
                 ))}
